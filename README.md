@@ -4,15 +4,19 @@
 
 This is a simple server built using Ktor. It has a single root endpoint that serves a simple HTML page with a search bar and a list of files matching the query. The query is a list of words separated by spaces* _(see improvements)_.
 
-The searching is done via a [Searcher](src/main/kotlin/me/dl33/Searcher.kt) interface with only one method. The reason to abstract this functionality is to allow different searching algorithms. The most basic one &mdash; scan every file on every query for every word &mdash; is implemented in [SimpleSearcher](src/main/kotlin/me/dl33/SimpleSearcher.kt).
+The searching is done via a [Searcher](src/main/kotlin/me/dl33/Searcher.kt) interface with only one `search` method. The reason to abstract this functionality is to allow different searching algorithms. The most basic one &mdash; scan every file on every query for every word &mdash; is implemented in [SimpleSearcher](src/main/kotlin/me/dl33/SimpleSearcher.kt).
 
 ## Running the app
 
 This is a Gradle project, therefore there is `gradlew run` command to run the server and `gradlew test` command to run the tests.
 
 ## List of improvements:
-- [ ] UI (this is out of test task scope)
+- [ ] ~~Better UI~~ _(out of test task scope)_
 - [ ] Fancier searching algorithms:
   * [ ] ~~Preload files into RAM~~ (most likely impossible in practice)
-  * [ ] Search for multiple words simultaneously (i.e. with Aho-Corasick algorithm) &mdash; will be useful if queries contain a lot of words
-  * [ ] Index files (assumes words are always split by a space and cannot contain one) _(*)_
+  * [ ] Index files (assumes words cannot contain spaces; _here is the asterisk*_):
+    * [ ] "Files to words": for every file build a trie and save it, on query iterate through files and check for words in \~constant time, process queries in _O(\#files)_ time. Good when there are a few (maybe large) files and many words per query.
+    * [ ] "Words to files": for every word save a set of files that contain them, then process queries in _O(\#words x |Ans|)_ time. Good when there is a lot of small files and few words per query. 
+  * [ ] Search for multiple words simultaneously (i.e. with Aho-Corasick algorithm). May be useful if queries contain a lot of words AND data is so large that indexing is not an option.
+- [ ] Separate API and HTML _(not necessary)_
+- [ ] Adequate testing _(meh, one integration test is fine for a test task)_
