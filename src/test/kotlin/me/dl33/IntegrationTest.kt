@@ -4,6 +4,7 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.server.testing.*
 import kotlin.test.Test
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class IntegrationTest {
@@ -14,15 +15,18 @@ class IntegrationTest {
     fun `basic test`() = listOf(
         SimpleSearcher(wordsFolder),
         WordsToFilesIndexingSearcher(wordsFolder),
+        FilesToWordsIndexingSearcher(wordsFolder),
     ).forEach { searcher ->
         testApplication {
             application {
                 searcherModule(searcher)
             }
             val result = client.get {
-                parameter("words", "a")
+                parameter("words", "b")
             }.bodyAsText()
-            assertTrue { result.contains("a.txt") }
+            assertTrue { result.contains("b.txt") }
+            assertTrue { result.contains("ab.txt") }
+            assertFalse { result.contains("a.txt") }
         }
     }
 }

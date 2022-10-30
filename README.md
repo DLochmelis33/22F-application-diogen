@@ -11,12 +11,14 @@ The searching is done via a [Searcher](src/main/kotlin/me/dl33/Searcher.kt) inte
 This is a Gradle project, therefore there is `gradlew run` command to run the server and `gradlew test` command to run the tests.
 
 ## List of improvements:
-- [ ] ~~Better UI~~ _(out of test task scope)_
+- [ ] ~~Better UI~~ _(outside of test task scope)_
 - [ ] Fancier searching algorithms:
   * [ ] ~~Preload files into RAM~~ (most likely impossible in practice)
-  * [ ] Index files (assumes words cannot contain spaces; _here is the asterisk*_):
-    * [ ] "Files to words": for every file build a trie and save it, on query iterate through files and check for words in \~constant time, process queries in _O(\#files)_ time. Good when there are a few (maybe large) files and many words per query.
-    * [x] "Words to files": for every word save a set of files that contain them, then process queries in _O(\#words x |Ans|)_ time. Good when there is a lot of small files and few words per query. 
+  * [x] Index files (assumes words cannot contain spaces; _here is the asterisk*_):
+    * [x] "Files to words": for every file build a trie and save it, on query iterate through files and check for words in \~constant time, process queries in _O(\#files)_ time. Good when there are a few (maybe large) files and many words per query. ([implementation](src/main/kotlin/me/dl33/FilesToWordsIndexingSearcher.kt))
+    * [x] "Words to files": for every word save a set of files that contain them, then process queries in _O(\#words x |Ans|)_ time. Good when there is a lot of small files and few words per query. ([implementation](src/main/kotlin/me/dl33/WordsToFilesIndexingSearcher.kt))
   * [ ] Search for multiple words simultaneously (i.e. with Aho-Corasick algorithm). May be useful if queries contain a lot of words AND data is so large that indexing is not an option.
+  * [ ] Employ 3rd-party libraries _(outside of test task scope)_
 - [ ] Separate API and HTML _(not necessary)_
+- [x] Simple testing
 - [ ] Adequate testing _(meh, one integration test is fine for a test task)_
