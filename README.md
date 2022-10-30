@@ -16,7 +16,7 @@ This is a Gradle project, therefore there is `gradlew run` command to run the se
   * [ ] ~~Preload files into RAM~~ (most likely impossible in practice)
   * [ ] Index files (assumes words cannot contain spaces; _here is the asterisk*_):
     * [ ] "Files to words": for every file build a trie and save it, on query iterate through files and check for words in \~constant time, process queries in _O(\#files)_ time. Good when there are a few (maybe large) files and many words per query.
-    * [ ] "Words to files": for every word save a set of files that contain them, then process queries in _O(\#words x |Ans|)_ time. Good when there is a lot of small files and few words per query. 
+    * [x] "Words to files": for every word save a set of files that contain them, then process queries in _O(\#words x |Ans|)_ time. Good when there is a lot of small files and few words per query. 
   * [ ] Search for multiple words simultaneously (i.e. with Aho-Corasick algorithm). May be useful if queries contain a lot of words AND data is so large that indexing is not an option.
 - [ ] Separate API and HTML _(not necessary)_
 - [ ] Adequate testing _(meh, one integration test is fine for a test task)_

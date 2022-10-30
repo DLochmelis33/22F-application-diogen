@@ -16,14 +16,11 @@ import kotlinx.html.textInput
 import kotlinx.html.tr
 
 fun main() {
-    server().start(wait = true)
+    val searcher = SimpleSearcher(System.getenv("SEARCHER_FOLDER") ?: "./words/")
+    embeddedServer(Netty, port = 9876, host = "0.0.0.0") { searcherModule(searcher) }.start(wait = true)
 }
 
-internal fun server() = embeddedServer(Netty, port = 9876, host = "0.0.0.0", module = Application::searcherModule)
-
-private val searcher: Searcher = SimpleSearcher(System.getenv("SEARCHER_FOLDER") ?: "./words/")
-
-fun Application.searcherModule() {
+internal fun Application.searcherModule(searcher: Searcher) {
     routing {
         get("/") {
             val words = call.parameters["words"]?.split(" ") ?: emptyList()
