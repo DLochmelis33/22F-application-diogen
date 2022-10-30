@@ -22,3 +22,4 @@ This is a Gradle project, therefore there is `gradlew run` command to run the se
 - [ ] Separate API and HTML _(not necessary)_
 - [x] Simple testing
 - [ ] Adequate testing _(meh, one integration test is fine for a test task)_
+- [ ] Choosing `Searcher` and/or changing it on-the-fly _(meh, just change one word in `main` function, no DI today)_
